@@ -1,20 +1,32 @@
 import useFetch from "../hooks/useFetch";
 import AgentForm from "../components/AgentForm";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function SalesAgent() {
-  const { data: agents, refetch } = useFetch("https://major-project2-backend-mu.vercel.app/agents");
+  const {
+    data: agents,
+    loading,
+    refetch,
+  } = useFetch("https://major-project2-backend-mu.vercel.app/agents");
 
-  function handleDelete(leadId) {
-    fetch(`https://major-project2-backend-mu.vercel.app/agents/${leadId}`, {
-      method: "DELETE",
-    }).then(() => refetch());
-  }
   const [showForm, setShowForm] = useState(false);
+
+  const targetRef = useRef(null);
+  useEffect(() => {
+    if (showForm && targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showForm]);
   return (
     <>
       <h1 className="heading">Sales Agent Management</h1>
+      {loading && (
+        <div className="display-5 text-center bg-success-subtle text-secondary py-5 rounded">
+          Loading ...
+        </div>
+      )}
+
       <ul className="list-group">
         {agents.map((agent) => (
           <li key={agent._id} className="list-group-item p-4">
@@ -34,16 +46,13 @@ export default function SalesAgent() {
               </div>
               <div className="col-3">{agent.name}</div>
               <div className="col-3">{agent.email}</div>
-              <div className="col-3 text-end px-5">
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    handleDelete(agent._id);
-                    toast.error("Agent Deleted");
-                  }}
+              <div className="col-3 text-end ">
+                <Link
+                  to={`/leads?agent=${agent.name}`}
+                  className="appBtn text-decoration-none"
                 >
-                  Delete
-                </button>
+                  View Leads
+                </Link>
               </div>
             </div>
           </li>
@@ -55,7 +64,9 @@ export default function SalesAgent() {
       >
         {showForm ? "Cancel" : "Add New Agent"}
       </button>
-      {showForm && <AgentForm refetch={refetch} setShowForm={setShowForm} />}
+      <div ref={targetRef}>
+        {showForm && <AgentForm refetch={refetch} setShowForm={setShowForm} />}
+      </div>
     </>
   );
 }
