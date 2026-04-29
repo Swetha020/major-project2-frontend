@@ -12,6 +12,7 @@ import SalesAgent from "./pages/SalesAgents";
 import Report from "./pages/Report";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
                 <Route path="/leads/:leadId" element={<LeadDetail />} />
                 <Route path="/add-lead" element={<NewLead />} />
                 <Route path="/agents" element={<SalesAgent />} />
-                <Route path="/reports" element={<Report />} />{" "}
+                <Route path="/reports" element={<Report />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>
             <Footer />

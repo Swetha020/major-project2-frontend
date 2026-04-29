@@ -10,7 +10,7 @@ export default function Dashboard() {
     <>
       <h1 className="heading">Dashboard</h1>
       <h5>Latest Leads:</h5>
-      <div className="row">
+      <div className="row my-4">
         {topNewLeads.map((lead) => (
           <div className="col-3 m-auto leads">
             <p className="pt-2"> Name: {lead.name}</p>
@@ -18,7 +18,7 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-      <div className="my-3">
+      <div className="my-5">
         <Link className="appBtn text-decoration-none" to={"/leads"}>
           {" "}
           View All Leads
@@ -42,7 +42,7 @@ export default function Dashboard() {
         </ul>
       </div>
       <hr />
-      <div className="mb-3">
+      <div className=" my-5">
         <Link className="appBtn text-decoration-none " to={"/add-lead"}>
         {" "}
         Add New Lead

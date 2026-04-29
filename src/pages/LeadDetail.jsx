@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import LeadForm from "../components/LeadForm";
 import useLeadContext from "../context/LeadContext";
@@ -11,8 +11,9 @@ export default function LeadDetail() {
 
   const [showForm, setShowForm] = useState(false);
   const [leadData, setLeadData] = useState(null);
-
   const [comment, setComment] = useState({ commentText: "", author: "" });
+
+  const targetRef = useRef(null);
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -46,7 +47,9 @@ export default function LeadDetail() {
     data: allComments,
     loading: commentsLoading,
     error: commentsError,
-  } = useFetch(`https://major-project2-backend-mu.vercel.app/leads/${leadId}/comments`);
+  } = useFetch(
+    `https://major-project2-backend-mu.vercel.app/leads/${leadId}/comments`,
+  );
 
   useEffect(() => {
     if (allComments) {
@@ -54,7 +57,9 @@ export default function LeadDetail() {
     }
   }, [allComments]);
 
-  const { data: agents } = useFetch(`https://major-project2-backend-mu.vercel.app/agents`);
+  const { data: agents } = useFetch(
+    `https://major-project2-backend-mu.vercel.app/agents`,
+  );
 
   const [comments, setComments] = useState(allComments);
 
@@ -64,8 +69,11 @@ export default function LeadDetail() {
     }
   }, [lead]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error Occurred</p>;
+  useEffect(() => {
+    if (showForm && targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showForm]);
 
   return (
     <>
@@ -75,36 +83,43 @@ export default function LeadDetail() {
         <div className="flex-grow-1">
           <div className="card">
             <div className="card-body">
+             
+
+              {error && (
+                <div className="display-5 text-center bg-danger-subtle text-secondary py-5 rounded">
+                  Error Occurred
+                </div>
+              )}
               <table className="table">
                 <tbody>
                   <tr>
                     <th>Lead Name</th>
-                    <td>{lead?.name}</td>
+                    <td>{loading?"Loading...":lead?.name}</td>
                   </tr>
-                  <tr>
+                  <tr> 
                     <th>Sales Agent</th>
-                    <td>{lead?.salesAgent?.name}</td>
+                    <td>{loading?"Loading...":lead?.salesAgent?.name}</td>
                   </tr>
                   <tr>
                     <th>Source</th>
-                    <td>{lead?.source}</td>
+                    <td>{loading?"Loading...":lead?.source}</td>
                   </tr>
                   <tr>
                     <th>Status</th>
-                    <td>{lead?.status}</td>
+                    <td>{loading?"Loading...":lead?.status}</td>
                   </tr>
                   <tr>
                     <th>Priority</th>
-                    <td>{lead?.priority}</td>
+                    <td>{loading?"Loading...":lead?.priority}</td>
                   </tr>
                   <tr>
                     <th>Time To Close</th>
-                    <td>{lead?.timeToClose}</td>
+                    <td>{loading?"Loading...":lead?.timeToClose}</td>
                   </tr>
                   {lead?.closedAt && (
                     <tr>
                       <th>Closed At</th>
-                      <td>{new Date(lead.closedAt).toLocaleString()}</td>
+                      <td>{loading?"Loading...":new Date(lead.closedAt).toLocaleString()}</td>
                     </tr>
                   )}
                 </tbody>
@@ -126,8 +141,17 @@ export default function LeadDetail() {
             <div className="card-body">
               <h4>Comments:</h4>
 
-              {commentsLoading && <p>Loading comments...</p>}
-              {commentsError && <p>Error loading comments</p>}
+              {commentsLoading && (
+                <div className="display-5 text-center bg-success-subtle text-secondary py-5 rounded">
+                  Loading Comments...
+                </div>
+              )}
+
+              {commentsError && (
+                <div className="display-5 text-center bg-danger-subtle text-secondary py-5 rounded">
+                  Error loading comments
+                </div>
+              )}
 
               {comments?.map((comment) => (
                 <div className="card m-2" key={comment._id}>
@@ -186,18 +210,20 @@ export default function LeadDetail() {
       </div>
 
       {showForm && leadData && (
-        <LeadForm
-          lead={leadData}
-          setLead={setLeadData}
-          isUpdate={true}
-          onSubmit={(e) => {
-            e.preventDefault();
-            updateLead(leadData, leadData._id);
-            setShowForm(false);
-            toast.success("Lead Updated");
-            refetchLead();
-          }}
-        />
+        <div ref={targetRef}>
+          <LeadForm
+            lead={leadData}
+            setLead={setLeadData}
+            isUpdate={true}
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateLead(leadData, leadData._id);
+              setShowForm(false);
+              toast.success("Lead Updated");
+              refetchLead();
+            }}
+          />
+        </div>
       )}
     </>
   );

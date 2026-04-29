@@ -16,7 +16,9 @@ export default function Leads() {
   const status = searchParams.get("status");
   const agent = searchParams.get("agent");
 
-  const { data: agents } = useFetch("https://major-project2-backend-mu.vercel.app/agents");
+  const { data: agents } = useFetch(
+    "https://major-project2-backend-mu.vercel.app/agents",
+  );
 
   function getStatusClass(status) {
     switch (status) {
@@ -118,7 +120,6 @@ export default function Leads() {
             {agents.map((agent) => (
               <option value={agent.name}>{agent.name}</option>
             ))}
-           
           </select>
         </div>
       </section>
@@ -162,25 +163,33 @@ export default function Leads() {
             <div className="col-3 fs-5">Agent</div>
           </div>
         </li>
-        {sortedLeads.map((lead) => (
-          <li className={`list-group-item m-1 ${getStatusClass(lead.status)}`}>
-            <Link
-              to={`/leads/${lead._id}`}
-              className="text-decoration-none text-dark"
-            >
-              <div className="row">
-                <div className="col-3">{lead.name}</div>
-                <div className="col-3">{lead.status}</div>
-                <div className="col-3">
-                  {priorityIcons[lead.priority]} <span>{lead.priority}</span>
-                </div>
-                <div className="col-3">
-                  {lead.salesAgent?.name || "No Agent"}
-                </div>
-              </div>
-            </Link>
+        {sortedLeads.length === 0 ? (
+          <li className="list-group-item text-center text-muted">
+            No Leads Found
           </li>
-        ))}
+        ) : (
+          sortedLeads.map((lead) => (
+            <li
+              className={`list-group-item m-1 ${getStatusClass(lead.status)}`}
+            >
+              <Link
+                to={`/leads/${lead._id}`}
+                className="text-decoration-none text-dark"
+              >
+                <div className="row">
+                  <div className="col-3">{lead.name}</div>
+                  <div className="col-3">{lead.status}</div>
+                  <div className="col-3">
+                    {priorityIcons[lead.priority]} <span>{lead.priority}</span>
+                  </div>
+                  <div className="col-3">
+                    {lead.salesAgent?.name || "No Agent"}
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))
+        )}
       </ul>
     </>
   );
