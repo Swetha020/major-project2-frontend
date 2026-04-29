@@ -13,6 +13,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  margin-left: 280px; 
 }
 
 .content {
@@ -24,6 +25,11 @@
   width: 280px;
   padding-top: 45px;
   background-color: #d7f8eded;
+  position: fixed;  
+  top: 0;
+  left: 0;
+  height: 100vh;   
+  overflow-y: auto; 
 }
 
 .anvaya {
