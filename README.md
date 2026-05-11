@@ -144,7 +144,7 @@ Sample Response:
   {{_id, image, name, email, ...}, {...}}
 ```
 
-### DELETE /api/address/:addressId
+### DELETE /api/agents/:agentsId
 
 Delete an agent<br/>
 Sample Response:
