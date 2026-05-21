@@ -36,7 +36,7 @@ export default function Report() {
   const agentNames = agents?.map((agent) => agent.name) || [];
 
   const agentLeadCount = leads.reduce((acc, lead) => {
-    acc[lead.salesAgent.name] = (acc[lead.salesAgent.name] || 0) + 1;
+    acc[lead.salesAgent?.name] = (acc[lead.salesAgent?.name] || 0) + 1;
     return acc;
   }, {});
   //   console.log(agentLeadCount);
@@ -80,6 +80,7 @@ export default function Report() {
   };
 
   const leadsOptions = {
+    
     plugins: {
       legend: {
         position: "right",
@@ -98,6 +99,7 @@ export default function Report() {
       },
     },
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "right",
@@ -146,13 +148,13 @@ export default function Report() {
       <h1 className="heading">CRM Reports</h1>
 
       <div className="chart-holder">
-        <div className="row">
-          <div className="col-4">
+        <div className="row align-items-center">
+          <div className="col-12 col-lg-4">
             <Doughnut data={completedData} options={leadsOptions} />
           </div>
-          <div className="col-8 d-flex flex-column justify-content-center">
+          <div className="col-12 col-lg-8 d-flex flex-column justify-content-center">
             <h3 className="report-title">Leads closed and in Pipeline:</h3>
-            <div className="d-flex gap-5">
+            <div className="report-pills">
               <p className="data-pill">
                 Closed: {totalCompletedCount} (
                 {((totalCompletedCount / leads.length) * 100).toFixed(1)}%)
@@ -176,13 +178,13 @@ export default function Report() {
         </div>
       </div>
       <div className="chart-holder ">
-        <div className="row">
-          <div className="col-4">
+        <div className="row align-items-center">
+          <div className="col-12 col-lg-4">
             <Pie data={leadsData} options={leadsOptions} />
           </div>
-          <div className="col-8 d-flex flex-column justify-content-center">
+          <div className="col-12 col-lg-8 d-flex flex-column justify-content-center">
             <h3 className="report-title">Leads Status:</h3>
-            <div className="d-flex gap-4">
+            <div className="report-pills">
               {statuses.map((status) => (
                 <p className="data-pill">
                   {status}: {statusCounts[status] || 0}

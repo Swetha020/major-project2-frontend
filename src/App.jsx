@@ -10,20 +10,24 @@ import LeadDetail from "./pages/LeadDetail";
 import NewLead from "./pages/NewLead";
 import SalesAgent from "./pages/SalesAgents";
 import Report from "./pages/Report";
+import Settings from "./pages/Settings";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Settings from "./pages/Settings";
+import { useState } from "react";
+
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <LeadProvider>
       <Router>
         <div className="layout">
-          <div className="sidebar">
-            <Sidebar />
+          <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+            <Sidebar closeSidebar={() => setSidebarOpen(false)} />
           </div>
           <div className="main">
-            <Header />
+            <Header setSidebarOpen={setSidebarOpen} />
             <div className="content">
               <Routes>
                 <Route path="/" element={<Dashboard />} />

@@ -31,7 +31,7 @@ export default function SalesAgent() {
         {agents.map((agent) => (
           <li key={agent._id} className="list-group-item p-4">
             <div className="row align-items-center">
-              <div className="col-3">
+              <div className="col-12 col-md-2 text-center">
                 {agent.image && (
                   <img
                     src={agent.image}
@@ -41,12 +41,13 @@ export default function SalesAgent() {
                       height: "50px",
                       borderRadius: "20%",
                     }}
+                    className="agent-img"
                   />
                 )}
               </div>
-              <div className="col-3">{agent.name}</div>
-              <div className="col-3">{agent.email}</div>
-              <div className="col-3 text-end ">
+              <div className="col-12 col-md-3 text-center text-md-start fw-bold">{agent.name}</div>
+              <div className="col-12 col-md-4 text-center text-md-start my-3">{agent.email}</div>
+              <div className="col-12 col-md-3 text-center text-md-end ">
                 <Link
                   to={`/leads?agent=${agent.name}`}
                   className="appBtn text-decoration-none"

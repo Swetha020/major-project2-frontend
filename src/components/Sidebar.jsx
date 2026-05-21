@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({closeSidebar}) {
   return (
+    <>
+      <button to="/" onClick={closeSidebar} className="close-btn">
+        Close 
+      </button>
       <ul className="nav nav-pills flex-column mt-5">
         <li className="nav-item sidebar-items">
           <NavLink
@@ -80,5 +84,6 @@ export default function Sidebar() {
           </NavLink>
         </li>
       </ul>
+    </>
   );
 }

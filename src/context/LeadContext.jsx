@@ -18,7 +18,7 @@ export function LeadProvider({ children }) {
       ? leads.filter((lead) => lead.status === status)
       : leads;
     const filteredLeads = agent
-      ? filteredLeadsByStatus.filter((lead) => lead.salesAgent.name == agent)
+      ? filteredLeadsByStatus.filter((lead) => lead.salesAgent?.name == agent)
       : filteredLeadsByStatus;
     return filteredLeads;
   };

@@ -44,7 +44,6 @@ export default function Dashboard() {
       <hr />
       <div className=" my-5">
         <Link className="appBtn text-decoration-none " to={"/add-lead"}>
-        {" "}
         Add New Lead
       </Link>
       </div>
