@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar({closeSidebar}) {
   return (
     <>
-      <button to="/" onClick={closeSidebar} className="close-btn">
+      <button onClick={closeSidebar} className="close-btn">
         Close 
       </button>
       <ul className="nav nav-pills flex-column mt-5">
