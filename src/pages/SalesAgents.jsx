@@ -41,7 +41,6 @@ export default function SalesAgent() {
                       height: "50px",
                       borderRadius: "20%",
                     }}
-                    className="agent-img"
                   />
                 )}
               </div>

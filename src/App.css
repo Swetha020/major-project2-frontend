@@ -283,12 +283,7 @@
   border-color: var(--secondary-color);
 }
 
-.agent-img{
-  width: 60px;
-  height: 60px;
-  border-radius: 20%;
-  object-fit: cover;
-}
+
 
 .report-title {
   font-family: monospace;
