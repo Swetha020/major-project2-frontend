@@ -44,8 +44,12 @@ export default function SalesAgent() {
                   />
                 )}
               </div>
-              <div className="col-12 col-md-3 text-center text-md-start fw-bold">{agent.name}</div>
-              <div className="col-12 col-md-4 text-center text-md-start my-3">{agent.email}</div>
+              <div className="col-12 col-md-3 text-center text-md-start fw-bold">
+                {agent.name}
+              </div>
+              <div className="col-12 col-md-4 text-center text-md-start my-3">
+                {agent.email}
+              </div>
               <div className="col-12 col-md-3 text-center text-md-end ">
                 <Link
                   to={`/leads?agent=${agent.name}`}
@@ -58,12 +62,14 @@ export default function SalesAgent() {
           </li>
         ))}
       </ul>
-      <button
-        className="appBtn my-2 mt-4"
-        onClick={() => setShowForm((prev) => !prev)}
-      >
-        {showForm ? "Cancel" : "Add New Agent"}
-      </button>
+      <div className="btn-holder">
+        <button
+          className="appBtn my-2 mt-4"
+          onClick={() => setShowForm((prev) => !prev)}
+        >
+          {showForm ? "Cancel" : "Add New Agent"}
+        </button>
+      </div>
       <div ref={targetRef}>
         {showForm && <AgentForm refetch={refetch} setShowForm={setShowForm} />}
       </div>

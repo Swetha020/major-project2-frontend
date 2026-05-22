@@ -55,6 +55,10 @@
     width: 220px;
   }
 
+  .header {
+    padding-right: 20px;
+  }
+
   .main {
     margin-left: 220px;
     width: calc(100% - 220px);
@@ -74,7 +78,6 @@
   .status-item {
     display: block;
   }
- 
 }
 
 @media (max-width: 768px) {
@@ -141,6 +144,13 @@
     width: 100%;
     text-align: center;
   }
+
+  .btn-holder{
+    text-align: center;
+    padding-top: 20px;
+    
+  }
+  
 }
 
 .anvaya {
@@ -283,8 +293,6 @@
   border-color: var(--secondary-color);
 }
 
-
-
 .report-title {
   font-family: monospace;
 }
@@ -312,10 +320,9 @@
   padding: 40px 0px;
   height: 700px;
   margin: 20px 0px 60px 0px;
-
 }
 
-.report-pills{
+.report-pills {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
